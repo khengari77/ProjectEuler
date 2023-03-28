@@ -1,17 +1,16 @@
-import Data.Function
-import Data.List
-import Data.Ord
- 
-collatzLength :: (Int -> Int) -> Int -> Int
-collatzLength f 1 = 1
-collatzLength f n | even n = (f $  div n 2) + 1
-                  | odd n = (f $ 3*n +1) + 1
+import Data.Ord (comparing)
+import Data.List (unfoldr, maximumBy)
 
-memoize :: (Int -> a) -> (Int -> a)
-memoize f = (map f [0 ..] !!)
+collatzLength :: Int -> Int
+collatzLength n  
+            | n <= 1    = 0
+            | even n    = 1 + collatzLength (div n 2) 
+            | otherwise = 1 + collatzLength (3 * n + 1)
 
-collatzLengthMemo :: Int -> Int
-collatzLengthMemo = fix(memoize . collatzLength)
+solve :: Int -> (Int, Int)
+solve n =  maximumBy (comparing snd) . zip l $ (map collatzLength l)
+        where l = [1..n]
 
 main :: IO()
-main = undefined
+main = putStrLn $ show . fst . solve $ 1000000
+

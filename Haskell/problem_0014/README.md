@@ -1,4 +1,4 @@
-## problem_0014 unsolved
+## problem_0014 solved
 The following iterative sequence is defined for the set of positive integers:
 
 n → n/2 (n is even)  
